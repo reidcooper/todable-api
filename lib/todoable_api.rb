@@ -3,6 +3,7 @@ require "byebug"
 module TodoableApi
 end
 
+require_relative 'http_errors'
 require_relative 'configuration'
 require_relative 'sessionable'
 require_relative 'http_requestable'

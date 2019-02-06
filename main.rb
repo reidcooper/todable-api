@@ -6,5 +6,4 @@ TodoableApi.configure do |config|
 end
 
 # Tests
-puts TodoableApi.configuration.username
-puts TodoableApi::DefaultClient.new.get
+puts TodoableApi::DefaultClient.new.get(path: 'lists')

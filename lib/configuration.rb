@@ -6,7 +6,7 @@ module TodoableApi
     attr_accessor :client_class
 
     def initialize
-      @endpoint = "http://todoable.teachable.tech/api"
+      @endpoint = "http://todoable.teachable.tech"
       @client_class = TodoableApi::DefaultClient
     end
   end

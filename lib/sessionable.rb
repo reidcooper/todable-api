@@ -5,9 +5,6 @@ require "date"
 
 module TodoableApi
   module Sessionable
-    SUCCESS_CODES = %w[200]
-    ERROR_CODES = %w[400 401 403 404 408 422]
-
     attr_reader :auth_token
 
     def connect!
@@ -15,7 +12,7 @@ module TodoableApi
       auth_token[:token]
     end
 
-    def uri
+    def auth_endpoint
       URI.join(TodoableApi.configuration.endpoint, 'api/authenticate')
     end
 
@@ -32,23 +29,22 @@ module TodoableApi
     private
 
     def retrieve_auth_token
-      http = Net::HTTP.new(uri.host, uri.port)
+      http = Net::HTTP.new(auth_endpoint.host, auth_endpoint.port)
 
-      request = Net::HTTP::Post.new(uri.request_uri)
+      request = Net::HTTP::Post.new(auth_endpoint.request_uri)
 
       request.basic_auth(
         TodoableApi.configuration.username,
         TodoableApi.configuration.password
       )
 
-      handle_response(http.request(request))
+      handle_auth_response(http.request(request))
     end
 
-    def handle_response(response)
+    def handle_auth_response(response)
       @auth_token = {}
 
-      return unless SUCCESS_CODES.include?(response.code)
-
+      # TODO: Fix this to handle error cases
       begin
         response = JSON.parse(response.body)
         @auth_token[:token] = response["token"]
