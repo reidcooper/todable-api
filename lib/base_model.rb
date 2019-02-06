@@ -4,10 +4,18 @@ module TodoableApi
       def client
         @client ||= TodoableApi.configuration.client_class.new
       end
+    end
 
-      def parse_response(json_body)
-        @raw_json = json_body
-        puts @raw_json
+    attr_accessor :id, :attributes, :name
+
+    def initialize(attributes = {})
+      assign_attributes(attributes)
+    end
+
+    def assign_attributes(attributes = {})
+      @attributes = attributes
+      attributes.each do |key, value|
+        instance_variable_set("@#{key}", value)
       end
     end
   end

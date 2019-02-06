@@ -11,3 +11,7 @@ End: 8:52am
 Session 3 -
 Start: 9:45am
 End: 10:08am
+
+Session 3 -
+Start: 5:22pm
+End: 6:22pm
