@@ -3,7 +3,7 @@ require "uri"
 require "json"
 
 module TodoableApi
-  class Sessionable
+  module Sessionable
     SUCCESS_CODES = %w[200]
     ERROR_CODES = %w[400 401 403 404 408 422]
 
@@ -11,7 +11,7 @@ module TodoableApi
 
     def connect!
       retrieve_auth_token unless connected?
-      puts auth_token
+      auth_token["token"]
     end
 
     def uri
@@ -28,7 +28,7 @@ module TodoableApi
       expires_at >= Time.now
     end
 
-    # private
+    private
 
     def retrieve_auth_token
       http = Net::HTTP.new(uri.host, uri.port)

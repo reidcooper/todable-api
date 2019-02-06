@@ -7,7 +7,7 @@ module TodoableApi
 
     def initialize
       @endpoint = "http://todoable.teachable.tech/api"
-      # @client_class = TodoableApi::DefaultClient
+      @client_class = TodoableApi::DefaultClient
     end
   end
 

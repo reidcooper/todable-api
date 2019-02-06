@@ -7,4 +7,4 @@ end
 
 # Tests
 puts TodoableApi.configuration.username
-puts TodoableApi::Sessionable.new.connect!
+puts TodoableApi::DefaultClient.new.get
