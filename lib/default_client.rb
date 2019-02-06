@@ -10,32 +10,35 @@ module TodoableApi
     def get(path:, params: {})
       handle_preconditions do
         puts "GET"
-        puts @headers
-        puts request(method: :get, path: path, params: params, headers: @headers)
+        request(method: :get, path: path, params: params, headers: @headers)
       end
     end
 
     def put(path:, params: {})
       handle_preconditions do
         puts "PUT"
-        puts @headers
-        puts request(method: :put, path: path, params: params, headers: @headers)
+        request(method: :put, path: path, params: params, headers: @headers)
+      end
+    end
+
+    def post(path:, params: {})
+      handle_preconditions do
+        puts "POST"
+        request(method: :post, path: path, params: params, headers: @headers)
       end
     end
 
     def patch(path:, params: {})
       handle_preconditions do
         puts "PATCH"
-        puts @headers
-        puts request(method: :patch, path: path, params: params, headers: @headers)
+        request(method: :patch, path: path, params: params, headers: @headers)
       end
     end
 
     def delete(path:, params: {})
       handle_preconditions do
         puts "DELETE"
-        puts @headers
-        puts request(method: :delete, path: path, params: params, headers: @headers)
+        request(method: :delete, path: path, params: params, headers: @headers)
       end
     end
 
@@ -43,6 +46,7 @@ module TodoableApi
 
     def handle_preconditions
       @headers["Authorization"] = "Token token=\"#{connect!}\""
+      puts @headers
       yield
     end
 
