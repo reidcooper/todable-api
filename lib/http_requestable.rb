@@ -12,13 +12,13 @@ module TodoableApi
         request = Net::HTTP::Get.new(uri, headers)
       when :put
         request = Net::HTTP::Put.new(uri, headers)
-        request.set_form_data(params)
+        request.body = params.to_json
       when :post
         request = Net::HTTP::Post.new(uri, headers)
-        request.set_form_data(params)
+        request.body = params.to_json
       when :patch
         request = Net::HTTP::Patch.new(uri, headers)
-        request.set_form_data(params)
+        request.body = params.to_json
       when :delete
         request = Net::HTTP::Delete.new(uri, headers)
       end
