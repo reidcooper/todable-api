@@ -1,7 +1,9 @@
 module TodoableApi
   class BaseModel
-    def self.client
-      @client ||= TodoableApi.configuration.client_class.new
+    class << self
+      def client
+        @client ||= TodoableApi.configuration.client_class.new
+      end
     end
 
     attr_reader :id
