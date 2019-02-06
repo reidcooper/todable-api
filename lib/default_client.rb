@@ -1,6 +1,7 @@
 module TodoableApi
   class DefaultClient
     include Sessionable
+    include HTTPRequestable
 
     def initialize
       @headers = default_headers

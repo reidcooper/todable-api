@@ -1,6 +1,7 @@
 require "net/http"
 require "uri"
 require "json"
+require "date"
 
 module TodoableApi
   module Sessionable
@@ -11,7 +12,7 @@ module TodoableApi
 
     def connect!
       retrieve_auth_token unless connected?
-      auth_token["token"]
+      auth_token[:token]
     end
 
     def uri
@@ -19,13 +20,13 @@ module TodoableApi
     end
 
     def connected?
-      return false if auth_token.nil?
+      return false if auth_token.nil? || auth_token.empty?
 
       expires_at = auth_token.dig(:expires)
 
       return false if expires_at.nil?
 
-      expires_at >= Time.now
+      expires_at >= DateTime.now
     end
 
     private
@@ -44,12 +45,16 @@ module TodoableApi
     end
 
     def handle_response(response)
-      @auth_token = nil
+      @auth_token = {}
 
-      if SUCCESS_CODES.include?(response.code)
-        @auth_token = JSON.parse(response.body)
-      elsif ERROR_CODES.include?(response.code)
-        @auth_token = nil
+      return unless SUCCESS_CODES.include?(response.code)
+
+      begin
+        response = JSON.parse(response.body)
+        @auth_token[:token] = response["token"]
+        @auth_token[:expires_at] = DateTime.parse(response["expires_at"])
+      rescue JSON::ParserError
+        @auth_token = {}
       end
     end
   end
