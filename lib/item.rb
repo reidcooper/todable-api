@@ -25,11 +25,12 @@ module TodoableApi
     def finish
       return true if finished?
 
-      if self.class.mark_as_finished(list_id, id)
-        attributes = list.reload.attributes["items"].find { |i| i["id"] == self["id"] }
+      begin
+        self.class.mark_as_finished(list_id, id)
+        attributes = list.reload.attributes["items"].find { |i| i["id"] == id }
         initialize(attributes)
         true
-      else
+      rescue TodoableApi::NotFound
         false
       end
     end

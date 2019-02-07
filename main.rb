@@ -6,8 +6,8 @@ TodoableApi.configure do |config|
 end
 
 # Tests
-puts TodoableApi::List.all
-output = TodoableApi::List.find("39a90439-b8af-4ec5-8422-4056d36d6832")
-byebug
+list = TodoableApi::List.all.first
+item = TodoableApi::Item.create(list.id, Time.now.to_s)
+item.finish
 
 true == true

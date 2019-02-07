@@ -34,8 +34,12 @@ module TodoableApi
     end
 
     def reload
-      attributes = self.class.find(id)
+      @memoized_items = nil
+
+      attributes = self.class.find(id).attributes
+
       initialize(attributes)
+
       self
     end
 
@@ -45,12 +49,14 @@ module TodoableApi
     end
 
     def items
-      @these_items ||= @items.map do |item|
+      reload if attributes["items"].nil?
+
+      @memoized_items ||= attributes.fetch("items", []).map do |item|
         item["list_id"] = id
         TodoableApi::Item.new(item)
       end
 
-      @these_items
+      @memoized_items
     end
   end
 end
