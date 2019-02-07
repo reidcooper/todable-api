@@ -19,7 +19,7 @@ module TodoableApi
     def connected?
       return false if auth_token.nil? || auth_token.empty?
 
-      expires_at = auth_token.dig(:expires)
+      expires_at = auth_token.dig(:expires_at)
 
       return false if expires_at.nil?
 
@@ -49,7 +49,7 @@ module TodoableApi
         response = JSON.parse(response.body)
         @auth_token[:token] = response["token"]
         @auth_token[:expires_at] = DateTime.parse(response["expires_at"])
-      rescue JSON::ParserError
+      rescue JSON::ParserError, TypeError
         @auth_token = {}
       end
     end
