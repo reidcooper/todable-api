@@ -28,4 +28,4 @@ End: 6:22pm
 February 6th, 2019
 Session 5 -
 Start: 6:55pm
-End:
+End: 9:59pm
