@@ -1,6 +1,7 @@
 Dependencies:
 
 - rspec (3.8.0)
+- webmock (3.5.1)
 
 Work Log:
 

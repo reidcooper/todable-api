@@ -41,13 +41,13 @@ module TodoableApi
           response.body
         end
       when 401
-        raise TodoableApi::Unauthorized.new
+        raise TodoableApi::Unauthorized
       when 404
-        raise TodoableApi::NotFound.new
+        raise TodoableApi::NotFound
       when 422
-        raise TodoableApi::UnprocessableEntity.new(JSON.parse(response.body))
+        raise TodoableApi::UnprocessableEntity, JSON.parse(response.body)
       when 500
-        raise TodoableApi::InternalServerError.new
+        raise TodoableApi::InternalServerError
       end
     end
   end

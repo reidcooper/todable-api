@@ -30,5 +30,7 @@ RSpec.describe TodoableApi::Configuration do
     expect(TodoableApi.configuration.password).to eq("bar")
     expect(TodoableApi.configuration.endpoint).to eq("example.com")
     expect(TodoableApi.configuration.client_class).to eq(client_double)
+
+    TodoableApi.instance_variable_set("@configuration", nil)
   end
 end
