@@ -1,5 +1,7 @@
 # TodoableApi
 
+Wraps the API endpoints of Todoable's Todo Service. Once installed, you are able to manage your todo lists, items, as well as marking individual items as finished.
+
 Work Log:
 
 February 5th, 2019
@@ -45,7 +47,64 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Once the gem is installed, you are able to use it in your code. Here is a code sample that illustrates usage
+
+```ruby
+require 'todoable_api'
+
+# Initializes TodoableApi gem
+TodoableApi.configure do |config|
+  config.username = "username@example.com"
+  config.password = "foobar"
+  # Below are optional configurations that can be overriden
+  # config.endpoint = "custom"
+  # config.client_class = NewClientClass
+end
+
+# View all lists
+TodoableApi::List.all
+
+# Create a new list
+list = TodoableApi::List.create("foobar")
+list.name # foobar
+
+# Find a list
+found_list = TodoableApi::List.find(list.id)
+fount_list.id == list.id # true
+
+# Update a list
+TodoableApi::List.update(list.id, "newname")
+
+list.name = "updatedname"
+list.save
+
+list = TodoableApi::List.find(list.id)
+list.name == "updatedname" # true
+
+# Delete a list
+TodoableApi::List.delete(list.id)
+
+# Items
+list.items
+# [TodoableApi::Item, TodoableApi::Item, TodoableApi::Item, ...]
+
+# Create a new item
+item = TodoableApi::Item.create(list.id, "task1")
+item.name == "task1" # true
+
+# Delete an item
+TodoableApi::Item.delete(list.id, item.id)
+
+# Mark as finished
+TodoableApi::Item.mark_as_finished(list.id, item.id)
+
+item.finish
+item.finished? # true
+
+# Display list associated to item
+item.list.id == list.id # true
+
+```
 
 ## Development
 
@@ -54,10 +113,6 @@ After checking out the repo, run `bin/setup` to install dependencies. You can al
 To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
 To run specs `bundle exec rspec`
-
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/todoable_api.
 
 ## License
 
