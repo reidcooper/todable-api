@@ -11,10 +11,12 @@ module TodoableApi
     end
   end
 
+  # Yields a new or existing configuration object
   def self.configuration
     @configuration ||= Configuration.new
   end
 
+  # Provides a block in order to customize the configuration
   def self.configure
     yield configuration
   end

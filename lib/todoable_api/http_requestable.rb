@@ -3,6 +3,8 @@ require "uri"
 
 module TodoableApi
   module HTTPRequestable
+
+    # Make desired network request
     def request(method: :get, path:, params: {}, headers: {})
       uri = api_endpoint(path)
       http = Net::HTTP.new(uri.hostname, uri.port)
@@ -26,10 +28,15 @@ module TodoableApi
       handle_api_response(http.request(request))
     end
 
+    # Returns the endpoint we will make the API requests
+    # Returns an URI object
     def api_endpoint(path)
       URI.join(TodoableApi.configuration.endpoint, "api/#{path}")
     end
 
+    # Parses response from server
+    # If 200..300 response, we will return either a Hash object otherwise the body of the response
+    # 422 will raise an error but with the errors returned by the server
     def handle_api_response(response)
       case response.code.to_i
       when 204

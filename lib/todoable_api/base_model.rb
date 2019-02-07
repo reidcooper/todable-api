@@ -1,6 +1,7 @@
 module TodoableApi
   class BaseModel
     class << self
+      # Initializes a client from the configured client class
       def client
         @client ||= TodoableApi.configuration.client_class.new
       end
@@ -12,6 +13,7 @@ module TodoableApi
       assign_attributes(attributes)
     end
 
+    # Given a hash, assign instance variables to each model based on hash input
     def assign_attributes(attributes = {})
       @attributes = attributes
       attributes.each do |key, value|
